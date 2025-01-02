@@ -67,7 +67,7 @@ public class SecurityApplication {
 			/* Create Users */
 			UserEntity userRomel = UserEntity.builder()
 					.username("Romel")
-					.password("1234")
+					.password("$2a$10$FI3pi7Bw0Wb/sSdc5J3K/u/zmYLvVcsKEOrt2D3LF99S0JEoPeYIW")
 					.isEnabled(true)
 					.accountNoExpired(true)
 					.accountNoLocked(true)
@@ -77,7 +77,7 @@ public class SecurityApplication {
 
 			UserEntity userJuan = UserEntity.builder()
 					.username("Juan")
-					.password("1234")
+					.password("$2a$10$FI3pi7Bw0Wb/sSdc5J3K/u/zmYLvVcsKEOrt2D3LF99S0JEoPeYIW")
 					.isEnabled(true)
 					.accountNoExpired(true)
 					.accountNoLocked(true)
@@ -87,7 +87,7 @@ public class SecurityApplication {
 
 			UserEntity userAndrea = UserEntity.builder()
 					.username("Andrea")
-					.password("1234")
+					.password("$2a$10$FI3pi7Bw0Wb/sSdc5J3K/u/zmYLvVcsKEOrt2D3LF99S0JEoPeYIW")
 					.isEnabled(true)
 					.accountNoExpired(true)
 					.accountNoLocked(true)
@@ -97,7 +97,7 @@ public class SecurityApplication {
 
 			UserEntity userAnyi = UserEntity.builder()
 					.username("Anyi")
-					.password("1234")
+					.password("$2a$10$FI3pi7Bw0Wb/sSdc5J3K/u/zmYLvVcsKEOrt2D3LF99S0JEoPeYIW")
 					.isEnabled(true)
 					.accountNoExpired(true)
 					.accountNoLocked(true)

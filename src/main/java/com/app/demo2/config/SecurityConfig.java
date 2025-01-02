@@ -19,45 +19,18 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.app.demo2.service.UserDetailServiceImpl;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-
-    /*
-     * @Bean
-     * public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)
-     * throws Exception {
-     * 
-     * return httpSecurity
-     * .csrf(csrf -> csrf.disable())
-     * .httpBasic(Customizer.withDefaults())
-     * .sessionManagement(session ->
-     * session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-     * .authorizeHttpRequests(
-     * http -> {
-     * // Configurar los endpoint Publicos
-     * http.requestMatchers(HttpMethod.GET, "/auth/hello").permitAll();
-     * 
-     * // Configurar los endpoint Privados
-     * http.requestMatchers(HttpMethod.GET,
-     * "/auth/hello-secured").hasAuthority("CREATE");
-     * 
-     * // Configurar el resto de los endpoint - No especificados
-     * // http.anyRequest().authenticated();
-     * 
-     * // Niega todo lo que no se especifique
-     * http.anyRequest().denyAll();
-     * })
-     * .build();
-     * 
-     * }
-     */
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -76,29 +49,21 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider() {
+    public AuthenticationProvider authenticationProvider(UserDetailServiceImpl userDetailService) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(passwordEncoder());
-        provider.setUserDetailsService(userDetailsService());
+        provider.setUserDetailsService(userDetailService);
         return provider;
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
-        List<UserDetails> userDetailsList = new ArrayList<>();
-
-        userDetailsList.add(User.withUsername("romel").password("1234").roles("ADMIN")
-                .authorities("READ", "CREATE").build());
-
-        userDetailsList.add(User.withUsername("juan").password("1234").roles("ADMIN")
-                .authorities("READ").build());
-
-        return new InMemoryUserDetailsManager(userDetailsList);
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+        // return NoOpPasswordEncoder.getInstance(); // Solo para pruebas sin encriptar
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+    public static void main(String[] args) {
+        System.out.println(new BCryptPasswordEncoder().encode("1234"));
     }
 
 }

@@ -4,27 +4,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @RestController
 @RequestMapping("/auth")
 @PreAuthorize("denyAll()")
 public class TestAuthController {
 
-    @GetMapping("/hello")
-    @PreAuthorize("permitAll()")
-    public String hello() {
-        return "Hello World";
+    @GetMapping("/get")
+    @PreAuthorize("hasAuthority('READ')")
+    public String helloGet() {
+        return "Hello World - GET";
     }
 
-    @GetMapping("/hello-secured")
-    @PreAuthorize("hasAuthority('CREATE')")
-    public String helloSecured() {
-        return "Hello Secured";
+    @PostMapping("/post")
+    @PreAuthorize("hasAuthority('READ') or hasAuthority('CREATED')")
+    public String helloPost() {
+        return "Hello World - POST";
     }
 
-    @GetMapping("/hello-secured2")
-    public String helloSecured2() {
-        return "Hello Secured2";
+    @PatchMapping("/patch")
+    @PreAuthorize("hasAuthority('REFACTOR')")
+    public String helloPatch() {
+        return "Hello World - PATCH";
     }
 
 }
